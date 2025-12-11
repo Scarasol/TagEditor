@@ -6,6 +6,8 @@
   "mixins": [
     "IngredientMixin",
     "ItemStackMixin",
+    "NamespacedWrapperMixin",
+    "ReferenceMixin",
     "TagEntryMixin",
     "TagValueMixin"
   ],

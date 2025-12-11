@@ -1,6 +1,7 @@
 package com.scarasol.tageditor.mixin;
 
 import com.scarasol.tageditor.compat.tacz.TaczTagHelper;
+import com.scarasol.tageditor.configuration.CommonConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -27,7 +28,7 @@ public abstract class TagEntryMixin {
 
     @Inject(method = "createItemStack", at = @At("TAIL"))
     private void tagEditor$createItemStack(Consumer<ItemStack> consumer, LootContext lootContext, CallbackInfo ci) {
-        if (ModList.get().isLoaded("tacz")) {
+        if (!CommonConfig.FORCE_COMPAT.get() && ModList.get().isLoaded("tacz")) {
             TaczTagHelper.getItemStacks(this.tag).forEach(consumer::accept);
         }
     }

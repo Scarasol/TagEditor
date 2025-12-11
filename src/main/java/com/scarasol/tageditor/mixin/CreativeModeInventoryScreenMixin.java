@@ -159,8 +159,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             return;
         }
 
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.options.keyInventory.matches(keyCode, scanCode) || mc.options.keyChat.matches(keyCode, scanCode)) {
+        if (keyCode != 256) {
             cir.setReturnValue(true);
         }
     }

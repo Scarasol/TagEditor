@@ -1,6 +1,7 @@
 package com.scarasol.tageditor.mixin;
 
 import com.scarasol.tageditor.compat.tacz.TaczTagHelper;
+import com.scarasol.tageditor.configuration.CommonConfig;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public abstract class TagValueMixin {
 
     @Inject(method = "getItems", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void tagEditors(CallbackInfoReturnable<Collection<ItemStack>> cir, List<ItemStack> list) {
-        if (ModList.get().isLoaded("tacz")) {
+        if (!CommonConfig.FORCE_COMPAT.get() && ModList.get().isLoaded("tacz")) {
             list.addAll(TaczTagHelper.getItemStacks(this.tag));
         }
     }
