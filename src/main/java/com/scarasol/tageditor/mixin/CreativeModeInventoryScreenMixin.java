@@ -79,7 +79,7 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             this.tagEdit$tagBox.setMaxLength(128);
             this.tagEdit$tagBox.setVisible(true);
             this.tagEdit$tagBox.setCanLoseFocus(true);
-            this.tagEdit$tagBox.setFilter(s -> s.matches("[A-Za-z0-9_/:.-]*"));
+            this.tagEdit$tagBox.setFilter(s -> s.matches("^[A-Za-z0-9_/.-]*(:[A-Za-z0-9_/.-]*)?$"));
             this.tagEdit$tagBox.setResponder(text -> {
                 if (text == null) {
                     TagHelper.BUFFER_TAG = null;
