@@ -120,8 +120,8 @@ public class TagHelper {
                 .filter(Objects::nonNull)
                 .forEach(resourceLocation -> {
                     Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
-                    if (item == null || (item instanceof AirItem && "tacz".equals(resourceLocation.getNamespace()))) {
-                        if ("tacz".equals(resourceLocation.getNamespace())) {
+                    if (item == null || item instanceof AirItem) {
+                        if (ModList.get().isLoaded("tacz")) {
                             TaczTagHelper.addTag(tagKey, resourceLocation);
                         }
                     } else {
@@ -134,8 +134,8 @@ public class TagHelper {
                 .filter(Objects::nonNull)
                 .forEach(resourceLocation -> {
                     Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
-                    if (item == null || (item instanceof AirItem && "tacz".equals(resourceLocation.getNamespace()))) {
-                        if ("tacz".equals(resourceLocation.getNamespace())) {
+                    if (item == null || item instanceof AirItem) {
+                        if (ModList.get().isLoaded("tacz")) {
                             TaczTagHelper.removeTag(tagKey, resourceLocation);
                         }
                     } else {
@@ -281,7 +281,7 @@ public class TagHelper {
             for (TagTuple<String, Boolean> tuple : entry.getValue()) {
                 ResourceLocation resourceLocation = new ResourceLocation(tuple.getA());
                 Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
-                if (item != null && !(item instanceof AirItem && "tacz".equals(resourceLocation.getNamespace()))) {
+                if (item != null && !(item instanceof AirItem)) {
                     if (tuple.getB()) {
                         if (itemAddMap.containsKey(item)) {
                             itemAddMap.get(item).add(currentTag);
@@ -296,7 +296,7 @@ public class TagHelper {
                         }
                     }
                 } else {
-                    if ("tacz".equals(resourceLocation.getNamespace())) {
+                    if (ModList.get().isLoaded("tacz")) {
                         TaczTagHelper.addTag(currentTag, resourceLocation);
                     }
                 }
