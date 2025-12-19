@@ -1,14 +1,12 @@
 package com.scarasol.tageditor.compat.tacz;
 
 import com.google.common.collect.Maps;
-import com.scarasol.tageditor.TagEditorMod;
 import com.scarasol.tageditor.api.IReference;
 import com.scarasol.tageditor.compat.tacz.network.TaczSyncPacket;
 import com.scarasol.tageditor.network.NetworkHandler;
 import com.scarasol.tageditor.util.TagTuple;
 import com.tacz.guns.api.TimelessAPI;
 import com.tacz.guns.api.item.IAmmo;
-import com.tacz.guns.api.item.IAmmoBox;
 import com.tacz.guns.api.item.IAttachment;
 import com.tacz.guns.api.item.IGun;
 import com.tacz.guns.api.item.builder.AmmoItemBuilder;
@@ -22,7 +20,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
@@ -57,6 +54,23 @@ public class TaczTagHelper {
             resourceLocation = gun.getGunId(itemStack);
         }
         return resourceLocation;
+    }
+
+    public static Set<ResourceLocation> getAllItemTags(ItemStack itemStack) {
+        ResourceLocation taczItemId = getTaczId(itemStack);
+        return getAllItemTags(taczItemId);
+    }
+
+    public static Set<ResourceLocation> getAllItemTags(@Nullable ResourceLocation taczItemId) {
+        Set<ResourceLocation> tags = new HashSet<>();
+        if (taczItemId != null) {
+            TACZ_TAG.forEach((key, value) -> {
+                if (value.contains(taczItemId)) {
+                    tags.add(key);
+                }
+            });
+        }
+        return tags;
     }
 
     public static boolean taczIs(TagKey<Item> tag, ItemStack itemStack) {

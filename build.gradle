@@ -151,6 +151,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("curse.maven:timeless-and-classics-zero-1028108:6518539")
+    implementation fg.deobf("curse.maven:petite-inventory-1386712:7250482")
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.20.0.105")
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.20.0.105")
     implementation fg.deobf("curse.maven:kiwi-303657:7289940")
