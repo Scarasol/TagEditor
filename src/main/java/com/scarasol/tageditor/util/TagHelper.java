@@ -101,10 +101,19 @@ public class TagHelper {
     }
 
     public static void saveTag(Registry<Item> registry, TagKey<Item> tagKey, Set<ResourceLocation> addItem, Set<ResourceLocation> removeItem) {
-        Set<TagTuple<String, Boolean>> currentTag = JsonHandler.readJsonList(tagKey.location());
-        Set<TagTuple<String, Boolean>> needSave = refreshTag(tagKey, addItem, removeItem).stream()
-                .filter(tagTuple -> currentTag.stream().noneMatch(
-                        currentTagTuple -> tagTuple.equals(currentTagTuple) && !tagTuple.getB().equals(currentTagTuple.getB()))).collect(Collectors.toSet());
+        Set<TagTuple<String, Boolean>> fileTags = JsonHandler.readJsonList(tagKey.location());
+        Set<TagTuple<String, Boolean>> needSave = refreshTag(tagKey, addItem, removeItem);
+        fileTags.forEach(fileTag -> {
+            if (ModList.get().isLoaded("tacz")) {
+                if (TaczTagHelper.getItem(new ResourceLocation(fileTag.getA())) != null) {
+                    return;
+                }
+            }
+            if (!needSave.removeIf(needSaveTag -> needSaveTag.equals(fileTag) && !needSaveTag.getB().equals(fileTag.getB()))) {
+                needSave.add(fileTag);
+            }
+        });
+
 
         syncTag(registry, tagKey, needSave);
         if (ModList.get().isLoaded("tacz")) {
