@@ -1,10 +1,13 @@
 package com.scarasol.tageditor.mixin;
 
+import com.scarasol.tageditor.api.ITagValue;
 import com.scarasol.tageditor.compat.tacz.TaczTagHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,6 +35,24 @@ public abstract class IngredientMixin {
                 cir.setReturnValue(false);
             }
 
+        }
+    }
+
+    @Shadow @Final
+    private Ingredient.Value[] values;
+
+    @Inject(method = "isVanilla", cancellable = true, remap = false, at = @At("RETURN"))
+    private void tagEditor$nonVanillaIfTaczPresent(CallbackInfoReturnable<Boolean> cir) {
+        if (!ModList.get().isLoaded("tacz") || !ModList.get().isLoaded("modernfix")) {
+            return;
+        }
+        for (Ingredient.Value value : values) {
+            if (value instanceof ITagValue tagValue) {
+                if (TaczTagHelper.TACZ_TAG.containsKey(tagValue.tagEditor$getTag().location())) {
+                    cir.setReturnValue(false);
+                    return;
+                }
+            }
         }
     }
 }

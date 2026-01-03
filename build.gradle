@@ -155,6 +155,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.20.0.105")
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.20.0.105")
     implementation fg.deobf("curse.maven:kiwi-303657:7289940")
+    implementation fg.deobf("curse.maven:modernfix-790626:7306749")
     runtimeOnly fg.deobf("curse.maven:create-328085:5838779")
     runtimeOnly fg.deobf("curse.maven:sona-survival-101-1023345:7301244")
     runtimeOnly fg.deobf("curse.maven:zombie-survival-kit-839371:7241685")
